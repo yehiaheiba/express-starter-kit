@@ -1,5 +1,5 @@
 <div id="top"></div>
-
+zr1ld9qqdx2b1rdu@email.partners
 <br />
 <div align="center"> 
   <a href="https://salla.dev"> 
@@ -278,7 +278,7 @@ salla app create-webhook <event.name>
 
 #### Order Related Webhooks/Actions
 
-| **Action Name**                                                             | **Description**                                                            |
+| **Action Name**                                                               | **Description**                                                              |
 | ----------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | [order.created](Actions/order/created.js)                                     | This indicates a singular order has been created                             |
 | [order.updated](Actions/order/updated.js)                                     | Details, data and/or content of a specific order have been refreshed updated |
@@ -302,7 +302,7 @@ salla app create-webhook <event.name>
 
 #### Product Related Webhooks/Actions
 
-| **Action Name**                                       | **Description**                                                                    |
+| **Action Name**                                         | **Description**                                                                      |
 | ------------------------------------------------------- | ------------------------------------------------------------------------------------ |
 | [product.created](Actions/product/created.js)           | A new product is created. Payload of the new product are to accompanying the product |
 | [product.updated](Actions/product/updated.js)           | Add/Modify details of a product                                                      |
@@ -314,7 +314,7 @@ salla app create-webhook <event.name>
 
 #### Shipping Companies Related Webhooks/Actions
 
-| **Action Name**                                               | **Description**                                                                     |
+| **Action Name**                                                 | **Description**                                                                       |
 | --------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
 | [shipping.zone.created](Actions/shipping/zone.created.js)       | This is triggered when a shipping zone has been created for a custom shipping company |
 | [shipping.zone.updated](Actions/shipping/zone.updated.js)       | This is triggered when a shipping zone has been updated for a custom shipping company |
@@ -326,7 +326,7 @@ salla app create-webhook <event.name>
 
 #### Customer Related Webhooks/Actions
 
-| **Action Name**                                       | **Description**                        |
+| **Action Name**                                         | **Description**                          |
 | ------------------------------------------------------- | ---------------------------------------- |
 | [customer.created](Actions/customer/created.js)         | Create a new customer record             |
 | [customer.updated](Actions/customer/updated.js)         | Update details for a customer            |
@@ -337,7 +337,7 @@ salla app create-webhook <event.name>
 
 #### Category Related Webhooks/Actions
 
-| **Action Name**                               | **Description**                                   |
+| **Action Name**                                 | **Description**                                     |
 | ----------------------------------------------- | --------------------------------------------------- |
 | [category.created](Actions/category/created.js) | Creates a new category for products to be put under |
 | [category.updated](Actions/category/updated.js) | Add new or reform existing category details         |
@@ -346,7 +346,7 @@ salla app create-webhook <event.name>
 
 #### Brand Related Webhooks/Actions
 
-| **Action Name**                         | **Description**                                                                    |
+| **Action Name**                           | **Description**                                                                      |
 | ----------------------------------------- | ------------------------------------------------------------------------------------ |
 | [brand.created](Actions/brand/created.js) | Creates a new Brand.                                                                 |
 | [brand.updated](Actions/brand/updated.js) | Triggered when Information about a sepcific Brand is updated/refurbished/streamlined |
@@ -356,7 +356,7 @@ salla app create-webhook <event.name>
 
 #### Store Related Webhooks/Actions
 
-| **Action Name**                                             | **Description**                  |
+| **Action Name**                                               | **Description**                    |
 | ------------------------------------------------------------- | ---------------------------------- |
 | [store.branch.created](Actions/store/branch.created.js)       | Creates a new store.               |
 | [store.branch.updated](Actions/store/branch.updated.js)       | Updates an existing branch         |
@@ -369,7 +369,7 @@ salla app create-webhook <event.name>
 
 #### Cart Related Webhooks/Actions
 
-| **Action Name**                                        | **Description**                               |
+| **Action Name**                                          | **Description**                                 |
 | -------------------------------------------------------- | ----------------------------------------------- |
 | [abandoned.cart](Actions/abandoned/cart.js)              | Outputs a list of abandoned carts               |
 | [coupon.applied](Actions/Miscellaneous/CouponApplied.js) | Creates a discount code in the form of a coupon |
@@ -387,7 +387,7 @@ salla app create-webhook <event.name>
 
 #### Miscellaneous Related Webhooks/Actions
 
-| **Action Name**                       | **Description**               |
+| **Action Name**                         | **Description**                 |
 | --------------------------------------- | ------------------------------- |
 | [review.added](Actions/review/added.js) | A product review has been added |
 

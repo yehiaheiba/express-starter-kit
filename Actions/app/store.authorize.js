@@ -30,6 +30,7 @@
  */
 module.exports = (eventBody, userArgs) => {
   // your logic here
+  console.log(eventBody, userArgs, "Hello Word1");
 
   return null;
 };

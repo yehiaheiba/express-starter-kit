@@ -1,4 +1,8 @@
 ///
+// Another file where you want to use getUnixTimestamp
+const getUnixTimestamp = require("../helpers/getUnixTimestamp");
+const User = require("../helpers/ORMs/Mongoose/schemas/users");
+const OAuthToken = require("../helpers/ORMs/Mongoose/schemas/oauthtokens");
 
 class SallaDatabase {
   constructor(DATABASE_ORM) {
@@ -10,13 +14,13 @@ class SallaDatabase {
       this.connection = await this.Database.connect();
       return this.connection;
     } catch (err) {
-      console.log("Error connecting to database: ", err);
       return null;
     }
   }
   async saveUser(data) {
     if (this.DATABASE_ORM == "TypeORM") {
       var userRepository = this.connection.getRepository("User");
+
       userRepository
         .save({
           username: data.name,
@@ -27,9 +31,6 @@ class SallaDatabase {
           remember_token: "",
         })
         .then(function (savedUser) {
-          console.log("User has been saved: ", savedUser);
-          console.log("Now lets load all users: ");
-
           return userRepository.find();
         })
         .then(function (users) {
@@ -56,18 +57,26 @@ class SallaDatabase {
     }
     if (this.DATABASE_ORM == "Mongoose") {
       try {
-        let userObj = this.connection.Mongoose.userModel({
-          username: data.name,
-          email: data.email,
-          email_verified_at: getUnixTimestamp(),
-          verified_at: getUnixTimestamp(),
-          password: "",
-          remember_token: "",
-        });
-
-        userObj.save();
-        return userObj._id;
-      } catch (err) {}
+        // Check if a user with the given email already exists
+        const existingUser = await User.findOne({ email: data.email });
+        if (existingUser) {
+          return existingUser._id; // Return existing user's ID if they already exist
+        } else {
+          // If no user exists, create a new one
+          let userObj = new User({
+            username: data.name,
+            email: data.email,
+            email_verified_at: getUnixTimestamp(),
+            verified_at: getUnixTimestamp(),
+            password: "",
+            remember_token: "",
+          });
+          await userObj.save();
+          return userObj._id;
+        }
+      } catch (err) {
+        console.log("Error in user handling:", err);
+      }
     }
   }
   async saveOauth(data, user_id) {
@@ -80,7 +89,7 @@ class SallaDatabase {
       ) {
         this.connection.models.OauthTokens.create({
           user_id: user_id,
-          merchant: data.store.id,
+          merchant: data.merchant.id,
           access_token: data.accessToken,
           expires_in: data.expires_in,
           refresh_token: data.refreshToken,
@@ -93,16 +102,32 @@ class SallaDatabase {
     }
     if (this.DATABASE_ORM == "Mongoose") {
       try {
-        let oauthobj = this.connection.Mongoose.oauthTokenModel({
-          user: user_id,
-          merchant: data.store.id,
-          access_token: data.accessToken,
-          expires_in: data.expires_in,
-          refresh_token: data.refreshToken,
-        });
+        // Check if an OAuthToken already exists for the user
+        let existingToken = await OAuthToken.findOne({ user: user_id });
 
-        oauthobj.save();
-      } catch (err) {}
+        if (existingToken) {
+          // If it exists, update the existing token
+          existingToken.merchant = data.merchant;
+          existingToken.access_token = data.access_token;
+          existingToken.expires_in = data.expires_in;
+          existingToken.refresh_token = data.refresh_token;
+          await existingToken.save();
+          console.log("OAuth token updated for user:", user_id);
+        } else {
+          // If no token exists, create a new one
+          let oauthobj = new OAuthToken({
+            user: user_id,
+            merchant: data.merchant,
+            access_token: data.access_token,
+            expires_in: data.expires_in,
+            refresh_token: data.refresh_token,
+          });
+          await oauthobj.save();
+          console.log("New OAuth token created for user:", user_id);
+        }
+      } catch (err) {
+        console.log("error inserting or updating OAuth token", err);
+      }
     }
   }
 }

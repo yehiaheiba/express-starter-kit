@@ -25,7 +25,7 @@ const {
 
 // Import Salla APIs
 const SallaAPIFactory = require("@salla.sa/passport-strategy");
-const SallaDatabase = require("./database")(SALLA_DATABASE_ORM || "Sequelize");
+const SallaDatabase = require("./database")(SALLA_DATABASE_ORM || "Mongoose");
 const SallaWebhook = require("@salla.sa/webhooks-actions");
 
 SallaWebhook.setSecret(SALLA_WEBHOOK_SECRET);
@@ -48,6 +48,8 @@ const SallaAPI = new SallaAPIFactory({
   callbackURL: SALLA_OAUTH_CLIENT_REDIRECT_URI,
 });
 
+//Testing out the reason for the database error:
+
 // set Listner on auth success
 SallaAPI.onAuth(async (accessToken, refreshToken, expires_in, data) => {
   SallaDatabase.connect()
@@ -62,7 +64,7 @@ SallaAPI.onAuth(async (accessToken, refreshToken, expires_in, data) => {
       });
       await SallaDatabase.saveOauth(
         {
-          merchant: data.store.id,
+          merchant: data.merchant.id,
           access_token: accessToken,
           expires_in: expires_in,
           refresh_token: refreshToken,
@@ -187,10 +189,15 @@ app.get("/refreshToken", ensureAuthenticated, function (req, res) {
 // get all orders from user store
 
 app.get("/orders", ensureAuthenticated, async function (req, res) {
-  res.render("orders.html", {
-    orders: await SallaAPI.getAllOrders(),
-    isLogin: req.user,
-  });
+  try {
+    // Attempt to fetch orders data
+    const orders = await SallaAPI.getAllOrders();
+    res.render("orders.html", { orders, isLogin: req.user });
+  } catch (err) {
+    // Log and handle the error gracefully
+    console.error("Error fetching orders:", err);
+    res.status(500).send("Unable to fetch orders");
+  }
 });
 
 // GET /customers
