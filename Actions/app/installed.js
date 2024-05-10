@@ -28,38 +28,4 @@
  * { key:"val" }
  * @api public
  */
-module.exports = (eventBody, userArgs) => {
-  // Extract the scopes from the event body
-  const receivedScopes = eventBody.data.app_scopes;
-
-  // Define the required scopes
-  const requiredScopes = [
-    "settings.read",
-    "customers.read_write",
-    "orders.read_write",
-    "carts.read",
-  ];
-
-  // Check if all required scopes are included in the received scopes
-  const hasAllScopes = requiredScopes.every((scope) =>
-    receivedScopes.includes(scope)
-  );
-
-  if (!hasAllScopes) {
-    // Logic to handle the scenario where not all required scopes are granted
-    console.log(
-      "Not all required scopes are granted:",
-      requiredScopes.filter((scope) => !receivedScopes.includes(scope))
-    );
-    // You might want to alert the user, log this issue, or handle it according to your application's needs
-    return {
-      error: "Insufficient permissions granted. Required scopes are missing.",
-    };
-  }
-
-  // If all required scopes are present, proceed with your logic
-  console.log("All required scopes are granted:", receivedScopes);
-
-  // Your normal processing logic here
-  return null; // or appropriate response/action
-};
+module.exports = (eventBody, userArgs) => {};

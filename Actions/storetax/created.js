@@ -30,5 +30,5 @@
  */
 module.exports = (eventBody, userArgs) => {
   // your logic here
-  return null;
+  return eventBody;
 };

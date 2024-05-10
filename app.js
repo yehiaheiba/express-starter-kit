@@ -33,8 +33,9 @@ SallaWebhook.setSecret(SALLA_WEBHOOK_SECRET);
 // Add Listners
 SallaWebhook.on("app.installed", (eventBody, userArgs) => {
   // handel app.installed event
+  console.log(eventBody);
 });
-SallaWebhook.on("app.stroe.authorize", (eventBody, userArgs) => {
+SallaWebhook.on("app.store.authorize", (eventBody, userArgs) => {
   // handel app.installed event
 });
 SallaWebhook.on("all", (eventBody, userArgs) => {
@@ -45,7 +46,7 @@ SallaWebhook.on("all", (eventBody, userArgs) => {
 const SallaAPI = new SallaAPIFactory({
   clientID: SALLA_OAUTH_CLIENT_ID,
   clientSecret: SALLA_OAUTH_CLIENT_SECRET,
-  callbackURL: SALLA_OAUTH_CLIENT_REDIRECT_URI,
+  // callbackURL: SALLA_OAUTH_CLIENT_REDIRECT_URI,
 });
 
 //Testing out the reason for the database error:
